@@ -1,1 +1,398 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKIL OP - Dashboard Control Panel</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(21, 28, 44, 0.75);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-gradient: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+            --accent-gold: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 81, 47, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(221, 36, 118, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(247, 151, 30, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        /* Header Area */
+        .top-header {
+            padding: 35px 30px 20px 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .brand-logo {
+            font-size: 36px;
+            font-weight: 800;
+            background: var(--accent-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Nav Tabs */
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-card {
+            padding: 14px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-card i {
+            font-size: 18px;
+        }
+
+        .nav-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .nav-card.active {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(221, 36, 118, 0.3);
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 35px 30px;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .custom-input, .custom-textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-input:focus, .custom-textarea:focus {
+            border-color: #f7971e;
+            box-shadow: 0 0 15px rgba(247, 151, 30, 0.2);
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            background: var(--accent-gold);
+            color: #0d0b1d;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(247, 151, 30, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(247, 151, 30, 0.4);
+        }
+
+        /* Result Box */
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid #f7971e;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            color: #e2e8f0;
+            word-break: break-all;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .navigation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .content-area {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <!-- Header -->
+        <div class="top-header">
+            <div class="brand-logo"><i class="fa-solid fa-rocket"></i> AKIL OP CONTROL CENTER</div>
+            <div class="tagline">All-in-One Multifunctional Web Application Dashboard</div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="navigation-grid">
+            <div class="nav-card active" onclick="switchTab('linkTab', this)">
+                <i class="fa-solid fa-link"></i>
+                <span>লিংক শর্টনার</span>
+            </div>
+            <div class="nav-card" onclick="switchTab('videoTab', this)">
+                <i class="fa-solid fa-circle-down"></i>
+                <span>ভিডিও ডাউনলোডার</span>
+            </div>
+            <div class="nav-card" onclick="switchTab('phoneTab', this)">
+                <i class="fa-solid fa-phone"></i>
+                <span>নাম্বার লুকআপ</span>
+            </div>
+            <div class="nav-card" onclick="switchTab('codeTab', this)">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>কোড অডিটর</span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+
+            <!-- 1. Link Shortener -->
+            <div id="linkTab" class="tab-panel active">
+                <div class="section-title"><i class="fa-solid fa-link" style="color: #f7971e;"></i> কাস্টম লিংক শর্টনার</div>
+                <div class="form-group">
+                    <label>আপনার মূল লিংকটি প্রবেশ করান:</label>
+                    <input type="text" id="linkInput" class="custom-input" placeholder="https://example.com/my-long-link">
+                </div>
+                <button class="btn-action" onclick="processLink()"><i class="fa-solid fa-bolt"></i> লিংক তৈরি করুন</button>
+                <div class="result-box" id="linkOutput">ফলাফল এখানে প্রদর্শিত হবে...</div>
+            </div>
+
+            <!-- 2. Video Downloader -->
+            <div id="videoTab" class="tab-panel">
+                <div class="section-title"><i class="fa-solid fa-video" style="color: #ff4757;"></i> সার্বজনীন ভিডিও ডাউনলোডার</div>
+                <div class="form-group">
+                    <label>ভিডিও লিংক দিন (YouTube, Facebook, Instagram, TikTok):</label>
+                    <input type="text" id="videoUrlInput" class="custom-input" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <button class="btn-action" onclick="processVideo()"><i class="fa-solid fa-download"></i> ভিডিও প্রসেস করুন</button>
+                <div class="result-box" id="videoOutput">ফলাফল এখানে প্রদর্শিত হবে...</div>
+            </div>
+
+            <!-- 3. Phone Lookup -->
+            <div id="phoneTab" class="tab-panel">
+                <div class="section-title"><i class="fa-solid fa-mobile-screen-button" style="color: #2ed573;"></i> ফোন নাম্বার ইনফরমেশন</div>
+                <div class="form-group">
+                    <label>ফোন নাম্বার লিখুন (কান্ট্রি কোড সহ):</label>
+                    <input type="text" id="phoneInput" class="custom-input" placeholder="+8801700000000">
+                </div>
+                <button class="btn-action" onclick="processPhone()"><i class="fa-solid fa-magnifying-glass"></i> তথ্য খুঁজুন</button>
+                <div class="result-box" id="phoneOutput">ফলাফল এখানে প্রদর্শিত হবে...</div>
+            </div>
+
+            <!-- 4. Code Auditor -->
+            <div id="codeTab" class="tab-panel">
+                <div class="section-title"><i class="fa-solid fa-code" style="color: #1e90ff;"></i> সোর্স কোড সিকিউরিটি অডিটর</div>
+                <div class="form-group">
+                    <label>আপনার Python/JS কোড পেস্ট করুন:</label>
+                    <textarea id="codeInput" class="custom-textarea" rows="5" placeholder="print('Hello World')"></textarea>
+                </div>
+                <button class="btn-action" onclick="processCode()"><i class="fa-solid fa-bug"></i> কোড স্ক্যান করুন</button>
+                <div class="result-box" id="codeOutput">ফলাফল এখানে প্রদর্শিত হবে...</div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            &copy; 2026 AKIL OP. All rights reserved. Powered by Render & Flask.
+        </div>
+    </div>
+
+    <!-- Script Area -->
+    <script>
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-card').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function processLink() {
+            const link = document.getElementById('linkInput').value.trim();
+            if(!link) return alert('দয়া করে একটি বৈধ লিংক প্রবেশ করান!');
+            
+            fetch('/api/customize-link', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({link: link})
+            }).then(r => r.json()).then(d => {
+                document.getElementById('linkOutput').innerHTML = '<b>শর্ট লিংক:</b> &nbsp; <a href="'+d.result+'" target="_blank" style="color:#ffd200; font-weight:bold;">'+d.result+'</a>';
+            }).catch(e => alert('সমস্যা হয়েছে!'));
+        }
+
+        function processVideo() {
+            const url = document.getElementById('videoUrlInput').value.trim();
+            if(!url) return alert('ভিডিও লিংক দিন!');
+            
+            document.getElementById('videoOutput').innerHTML = '⏳ ভিডিও প্রসেস হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...';
+            
+            fetch('/api/download-video', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({url: url})
+            }).then(r => r.json()).then(d => {
+                if(d.success) {
+                    document.getElementById('videoOutput').innerHTML = '📌 <b>শিরোনাম:</b> ' + d.title + '<br><br><a href="'+d.download_url+'" target="_blank" style="color:#2ed573; font-weight:bold; font-size: 16px;"><i class="fa-solid fa-circle-arrow-down"></i> সরাসরি ডাউনলোড করতে এখানে ক্লিক করুন</a>';
+                } else {
+                    document.getElementById('videoOutput').innerHTML = '❌ এরর: ' + d.error;
+                }
+            }).catch(e => {
+                document.getElementById('videoOutput').innerHTML = '❌ সার্ভারে কানেক্ট করা যাচ্ছে না!';
+            });
+        }
+
+        function processPhone() {
+            const phone = document.getElementById('phoneInput').value.trim();
+            if(!phone) return alert('ফোন নাম্বার দিন!');
+            
+            fetch('/api/lookup-phone', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({phone: phone})
+            }).then(r => r.json()).then(d => {
+                if(d.status === 'Success') {
+                    document.getElementById('phoneOutput').innerHTML = `<b>দেশ:</b> ${d.country} <br> <b>অপারেটর:</b> ${d.carrier} <br> <b>ওয়াটসঅ্যাপ:</b> <a href="${d.links.WhatsApp}" target="_blank" style="color:#25D366; font-weight:bold;">মেসেজ পাঠান</a>`;
+                } else {
+                    document.getElementById('phoneOutput').innerText = '❌ ' + d.message;
+                }
+            });
+        }
+
+        function processCode() {
+            const code = document.getElementById('codeInput').value;
+            if(!code) return alert('কোড পেস্ট করুন!');
+            
+            fetch('/api/audit-code', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code: code})
+            }).then(r => r.json()).then(d => {
+                document.getElementById('codeOutput').innerHTML = `<b>অবস্থা:</b> ${d.status}<br><b>রিস্ক স্কোর:</b> ${d.score}<br><b>পরামর্শ:</b> ${d.recommendation}`;
+            });
+        }
+    </script>
+</body>
+</html>
