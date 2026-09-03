@@ -1,4 +1,4 @@
 flask
-yt-dlp
-phonenumbers
 gunicorn
+requests
+yt-dlp
